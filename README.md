@@ -10,27 +10,24 @@ Vue.prototype.$wv = wv
 2、h5向app发送消息
 ```vue
 this.$wv.webView.postMessage({
-					data: {
-						action: 'scanCode'
-					}
-				})
+	data: {
+		action: 'scanCode'
+	}
+})
 ```
 
 3、h5接收app发来的消息
 ```vue
 mounted() {
-			uni.hideTabBar()
-			this.tabbarIndex = this.index
-			
-			window.scanCode = (query)=>{
-				const intPos = query.indexOf(':')
-				const endPos = query.indexOf('.')
-				const connectorId = query.slice(intPos + 3, endPos)
-				
-				console.log('扫码 connectorId ', connectorId)
-				
-			}
-		},
+	uni.hideTabBar()
+	this.tabbarIndex = this.index
+	window.scanCode = (query)=>{
+		const intPos = query.indexOf(':')
+		const endPos = query.indexOf('.')
+		const connectorId = query.slice(intPos + 3, endPos)
+		console.log('扫码 connectorId ', connectorId)
+		}
+	},
 ```
 app项目
 1、引入webview
@@ -41,28 +38,28 @@ url: "/hybrid/html/index.html"
 2、app接收h5传递来的消息
 ```vue
 handleMessage(msg) {
-				console.log("handleMessage--->", msg.detail.data)
-				let action = msg.detail.data[0].action
-				console.log('action--->',action)
-				switch (action) {
-					case 'scanCode':
-						this.toScanCode()
-						break
-				}
+	console.log("handleMessage--->", msg.detail.data)
+	let action = msg.detail.data[0].action
+	console.log('action--->',action)
+	switch (action) {
+		case 'scanCode':
+			this.toScanCode()
+			break
+			}
 
-			},
+	},
 ```
 
 ```vue
 toScanCode() {
-				console.log("toScanCode")
-				uni.scanCode({
-					success: (res) => {
-						const query = decodeURIComponent(res.result)
-					  3、app向h5发送消息
-						this.currentWebview = this.$mp.page.$getAppWebview()
-						this.currentWebview.children()[0].evalJS(`scanCode('${query}')`)
-					}
-				})
+	console.log("toScanCode")
+	uni.scanCode({
+	success: (res) => {
+		const query = decodeURIComponent(res.result)
+		3、app向h5发送消息
+		this.currentWebview = this.$mp.page.$getAppWebview()
+		this.currentWebview.children()[0].evalJS(`scanCode('${query}')`)
 			}
+		})
+	}
 ```  
