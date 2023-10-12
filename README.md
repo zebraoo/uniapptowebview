@@ -8,13 +8,16 @@ import * as wv from '@/libs/uni.webview.1.5.4.js'
 Vue.prototype.$wv = wv
 ```
 2、h5向app发送消息
+```vue
 this.$wv.webView.postMessage({
 					data: {
 						action: 'scanCode'
 					}
 				})
+```
 
 3、h5接收app发来的消息
+```vue
 mounted() {
 			uni.hideTabBar()
 			this.tabbarIndex = this.index
@@ -28,12 +31,15 @@ mounted() {
 				
 			}
 		},
-
+```
 app项目
 1、引入webview
+```vue
 url: "/hybrid/html/index.html"
 <web-view ref="webview" :src="url" @onPostMessage="handleMessage" @message="handleMessage"></web-view>
+```
 2、app接收h5传递来的消息
+```vue
 handleMessage(msg) {
 				console.log("handleMessage--->", msg.detail.data)
 				let action = msg.detail.data[0].action
@@ -45,7 +51,9 @@ handleMessage(msg) {
 				}
 
 			},
+```
 
+```vue
 toScanCode() {
 				console.log("toScanCode")
 				uni.scanCode({
@@ -57,4 +65,4 @@ toScanCode() {
 					}
 				})
 			}
-  
+```  
