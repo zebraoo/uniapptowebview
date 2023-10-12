@@ -3,8 +3,10 @@ uniapp app项目与uniapp h5项目通过webview交互
 
 h5项目
 1、首先导入uni.webview.1.5.4.js后引用
+```vue
 import * as wv from '@/libs/uni.webview.1.5.4.js'
 Vue.prototype.$wv = wv
+```
 2、h5向app发送消息
 this.$wv.webView.postMessage({
 					data: {
